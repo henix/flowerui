@@ -1,0 +1,26 @@
+{
+  "name": "flowerui",
+  "main": "flowerui.js",
+  "version": "0.1.0",
+  "authors": [
+    "henix <shellpick@gmail.com>"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "es5-shim": "~4.0.5",
+    "String.prototype.startsWith": "git://github.com/mathiasbynens/String.prototype.startsWith#v0.2.0",
+    "String.prototype.endsWith": "git://github.com/mathiasbynens/String.prototype.endsWith#v0.2.0",
+    "ie8": "~0.2.3",
+    "dom4": "~1.1.0"
+  }
+}
