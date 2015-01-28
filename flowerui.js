@@ -60,6 +60,9 @@ function compileElement(parentObj, element) {
   var len = childs.length;
   var nextParent = klass ? obj : parentObj;
   for (var i = 0; i < len; i++) {
+    if (childs[i].getAttribute("data-target") == "parent") {
+      compileElement(parentObj, childs[i]);
+    }
     compileElement(nextParent, childs[i]);
   }
   if (klass && obj && typeof obj.init === 'function') {
@@ -77,16 +80,17 @@ function compileAll(element) {
 /**
  * Call this if you changed your innerHTML, and want to your obj keep updated.
  */
-function refresh(obj, elem) {
+/*function refresh(obj, elem) {
   var childs = elem.children;
   var len = childs.length;
   for (var i = 0; i < len; i++) {
     compileElement(obj, childs[i]);
   }
 }
+*/
 
 FlowerUI.compileElement = compileElement;
 FlowerUI.compileAll = compileAll;
-FlowerUI.refresh = refresh;
+// FlowerUI.refresh = refresh;
 
 })(FlowerUI || (FlowerUI = {}));
