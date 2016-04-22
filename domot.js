@@ -20,6 +20,12 @@ DomoT.prototype.repaint = function(data) {
   } else {
     elem.appendChild(rendered);
   }
+
+  // 重新用 FlowerUI 编译所有子结点
+  var childs = elem.children;
+  for (var i = 0; i < childs.length; i++) {
+    FlowerUI.compileElement(this, childs[i]);
+  }
 };
 
 DomoT.prototype.init = function() {
