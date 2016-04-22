@@ -1,6 +1,6 @@
 function DomoT(elem) {
   this.elem = elem;
-  this.tmpl = elem.innerHTML.trim();
+  this.tmpl = elem.textContent.trim();
   this.initdata = elem.getAttribute("domo-data");
 }
 
