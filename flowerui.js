@@ -102,17 +102,16 @@ function compileAll(element) {
 /**
  * Call this if you changed your innerHTML, and want to your obj keep updated.
  */
-/*function refresh(obj, elem) {
+function refresh(obj, elem) {
   var childs = elem.children;
   var len = childs.length;
   for (var i = 0; i < len; i++) {
     compileElement(obj, childs[i]);
   }
 }
-*/
 
 FlowerUI.compileElement = compileElement;
 FlowerUI.compileAll = compileAll;
-// FlowerUI.refresh = refresh;
+FlowerUI.refresh = refresh;
 
 })(FlowerUI || (FlowerUI = {}));

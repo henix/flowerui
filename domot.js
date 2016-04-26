@@ -22,10 +22,7 @@ DomoT.prototype.repaint = function(data) {
   }
 
   // 重新用 FlowerUI 编译所有子结点
-  var childs = elem.children;
-  for (var i = 0; i < childs.length; i++) {
-    FlowerUI.compileElement(this, childs[i]);
-  }
+  FlowerUI.refresh(this, elem);
 };
 
 DomoT.prototype.init = function() {
