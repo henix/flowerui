@@ -1,8 +1,30 @@
 var FlowerUI;
 (function(FlowerUI) {
 
+var startsWith;
+if (String.prototype.startsWith) {
+	startsWith = function(a, b) {
+		return a.startsWith(b);
+	};
+} else {
+	startsWith = function(a, b) {
+		return a.lastIndexOf(b, 0) === 0;
+	};
+}
+
+var endsWith;
+if (String.prototype.endsWith) {
+	endsWith = function(a, b) {
+		return a.endsWith(b);
+	};
+} else {
+	endsWith = function(a, b) {
+		return a.indexOf(b, a.length - b.length) !== -1;
+	};
+}
+
 function removeEnd(str, suffix) {
-  if (str.endsWith(suffix)) {
+  if (endsWith(str, suffix)) {
     return str.substring(0, str.length - suffix.length);
   } else {
     return str;
@@ -37,7 +59,7 @@ function compileElement(parentObj, element) {
   var name = element.getAttribute('name');
   var klass;
   var tmp = element.classList[0];
-  if (tmp && tmp.startsWith("-")) {
+  if (tmp && startsWith(tmp, "-")) {
     klass = tmp.substring(1).replace("-", ".");
   }
   var obj = null;
@@ -46,7 +68,7 @@ function compileElement(parentObj, element) {
   }
   if (name && parentObj) {
     obj = obj || element;
-    if (name.endsWith('[]')) { // array
+    if (endsWith(name, '[]')) { // array
       name = removeEnd(name, '[]');
       if (!parentObj[name]) {
         parentObj[name] = [];

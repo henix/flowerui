@@ -17,8 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "String.prototype.startsWith": "git://github.com/mathiasbynens/String.prototype.startsWith#v0.2.0",
-    "String.prototype.endsWith": "git://github.com/mathiasbynens/String.prototype.endsWith#v0.2.0",
     "dom4": "~1.1.0"
   }
 }
