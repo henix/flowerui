@@ -58,7 +58,8 @@ function newInstance(klass, arg0) {
 function compileElement(parentObj, element) {
   var name = element.getAttribute('name');
   var klass;
-  var tmp = element.className.trim().split(/\s+/)[0];
+  var tmp = /\S+/.exec(element.className);
+  if (tmp) tmp = tmp[0];
   if (tmp && startsWith(tmp, "-")) {
     klass = tmp.substring(1).replace("-", ".");
   }
