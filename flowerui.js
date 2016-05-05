@@ -31,6 +31,14 @@ function removeEnd(str, suffix) {
   }
 }
 
+function toArray(x) {
+  var ar = [];
+  for (var i = 0; i < x.length; i++) {
+    ar.push(x[i]);
+  }
+  return ar;
+}
+
 /**
  * new klass(arg0)
  */
@@ -104,7 +112,7 @@ function compileAll(element) {
  * Call this if you changed your innerHTML, and want to your obj keep updated.
  */
 function refresh(obj, elem) {
-  var childs = elem.children;
+  var childs = toArray(elem.children);
   var len = childs.length;
   for (var i = 0; i < len; i++) {
     compileElement(obj, childs[i]);
