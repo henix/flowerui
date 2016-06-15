@@ -32,31 +32,31 @@ if (String.prototype.endsWith) {
 }
 
 function removeEnd(str, suffix) {
-  if (endsWith(str, suffix)) {
-    return str.substring(0, str.length - suffix.length);
-  } else {
-    return str;
-  }
+	if (endsWith(str, suffix)) {
+		return str.substring(0, str.length - suffix.length);
+	} else {
+		return str;
+	}
 }
 
 function makeArray(x) {
-  var ar = [];
-  for (var i = 0; i < x.length; i++) {
-    ar.push(x[i]);
-  }
-  return ar;
+	var ar = [];
+	for (var i = 0; i < x.length; i++) {
+		ar.push(x[i]);
+	}
+	return ar;
 }
 
 /**
  * new klass(arg0)
  */
 function newInstance(klass, arg0) {
-  var names = klass.split('.');
-  var f = window;
-  for (var i = 0; i < names.length; i++) {
-    f = f[names[i]];
-  }
-  return new f(arg0);
+	var names = klass.split('.');
+	var f = window;
+	for (var i = 0; i < names.length; i++) {
+		f = f[names[i]];
+	}
+	return new f(arg0);
 }
 
 /**
@@ -72,64 +72,64 @@ function newInstance(klass, arg0) {
  * class 必须是 -package-Name 的形式
  */
 function compileElement(parentObj, element) {
-  var name = element.getAttribute('name');
-  var klass;
-  var tmp = /\S+/.exec(element.className);
-  if (tmp) tmp = tmp[0];
-  if (tmp && startsWith(tmp, "-")) {
-    klass = tmp.substring(1).replace("-", ".");
-  }
-  var obj = null;
-  if (klass) {
-    obj = newInstance(klass, element);
-    // $parent 让子节点可以访问父节点
-    if (parentObj) {
-      obj.$parent = parentObj;
-    }
-  }
-  if (name && parentObj) {
-    obj = obj || element;
-    if (endsWith(name, '[]')) { // array
-      name = removeEnd(name, '[]');
-      if (!parentObj[name]) {
-        parentObj[name] = [];
-      }
-      parentObj[name].push(obj);
-    } else {
-      parentObj[name] = obj;
-    }
-  }
-  var childs = element.children;
-  var len = childs.length;
-  var nextParent = klass ? obj : parentObj;
-  for (var i = 0; i < len; i++) {
-    if (childs[i].getAttribute("data-target") == "parent" && nextParent.$parent) {
-      compileElement(nextParent.$parent, childs[i]);
-    } else {
-      compileElement(nextParent, childs[i]);
-    }
-  }
-  if (klass && obj && typeof obj.init === 'function') {
-    obj.init(); // trigger init event
-  }
-  return obj;
+	var name = element.getAttribute('name');
+	var klass;
+	var tmp = /\S+/.exec(element.className);
+	if (tmp) tmp = tmp[0];
+	if (tmp && startsWith(tmp, "-")) {
+		klass = tmp.substring(1).replace("-", ".");
+	}
+	var obj = null;
+	if (klass) {
+		obj = newInstance(klass, element);
+		// $parent 让子节点可以访问父节点
+		if (parentObj) {
+			obj.$parent = parentObj;
+		}
+	}
+	if (name && parentObj) {
+		obj = obj || element;
+		if (endsWith(name, '[]')) { // array
+			name = removeEnd(name, '[]');
+			if (!parentObj[name]) {
+				parentObj[name] = [];
+			}
+			parentObj[name].push(obj);
+		} else {
+			parentObj[name] = obj;
+		}
+	}
+	var childs = element.children;
+	var len = childs.length;
+	var nextParent = klass ? obj : parentObj;
+	for (var i = 0; i < len; i++) {
+		if (childs[i].getAttribute("data-target") == "parent" && nextParent.$parent) {
+			compileElement(nextParent.$parent, childs[i]);
+		} else {
+			compileElement(nextParent, childs[i]);
+		}
+	}
+	if (klass && obj && typeof obj.init === 'function') {
+		obj.init(); // trigger init event
+	}
+	return obj;
 }
 
 function compileAll(element) {
-  var obj = {};
-  compileElement(obj, element || document.body);
-  return obj;
+	var obj = {};
+	compileElement(obj, element || document.body);
+	return obj;
 }
 
 /**
  * Call this if you changed your innerHTML, and want to your obj keep updated.
  */
 function refresh(obj, elem) {
-  var childs = makeArray(elem.children);
-  var len = childs.length;
-  for (var i = 0; i < len; i++) {
-    compileElement(obj, childs[i]);
-  }
+	var childs = makeArray(elem.children);
+	var len = childs.length;
+	for (var i = 0; i < len; i++) {
+		compileElement(obj, childs[i]);
+	}
 }
 
 FlowerUI.compileElement = compileElement;

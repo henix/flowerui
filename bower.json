@@ -1,21 +1,21 @@
 {
-  "name": "flowerui",
-  "main": "flowerui.js",
-  "version": "0.1.2",
-  "authors": [
-    "henix <shellpick@gmail.com>"
-  ],
-  "moduleType": [
-    "globals"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-  }
+	"name": "flowerui",
+	"main": "flowerui.js",
+	"version": "0.1.2",
+	"authors": [
+		"henix <shellpick@gmail.com>"
+	],
+	"moduleType": [
+		"globals"
+	],
+	"license": "MIT",
+	"ignore": [
+		"**/.*",
+		"node_modules",
+		"bower_components",
+		"test",
+		"tests"
+	],
+	"dependencies": {
+	}
 }
