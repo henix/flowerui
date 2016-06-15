@@ -31,7 +31,7 @@ function removeEnd(str, suffix) {
   }
 }
 
-function toArray(x) {
+function makeArray(x) {
   var ar = [];
   for (var i = 0; i < x.length; i++) {
     ar.push(x[i]);
@@ -112,7 +112,7 @@ function compileAll(element) {
  * Call this if you changed your innerHTML, and want to your obj keep updated.
  */
 function refresh(obj, elem) {
-  var childs = toArray(elem.children);
+  var childs = makeArray(elem.children);
   var len = childs.length;
   for (var i = 0; i < len; i++) {
     compileElement(obj, childs[i]);
@@ -122,5 +122,7 @@ function refresh(obj, elem) {
 FlowerUI.compileElement = compileElement;
 FlowerUI.compileAll = compileAll;
 FlowerUI.refresh = refresh;
+
+FlowerUI.makeArray = makeArray;
 
 })(FlowerUI || (FlowerUI = {}));
