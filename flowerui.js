@@ -1,3 +1,11 @@
+/**
+ * FlowerUI: 一个简单的组件框架
+ * 兼容性：IE8
+ *
+ * https://github.com/henix/flowerui
+ *
+ * License: MIT
+ */
 var FlowerUI;
 (function(FlowerUI) {
 
@@ -74,6 +82,10 @@ function compileElement(parentObj, element) {
   var obj = null;
   if (klass) {
     obj = newInstance(klass, element);
+    // $parent 让子节点可以访问父节点
+    if (parentObj) {
+      obj.$parent = parentObj;
+    }
   }
   if (name && parentObj) {
     obj = obj || element;
@@ -91,10 +103,11 @@ function compileElement(parentObj, element) {
   var len = childs.length;
   var nextParent = klass ? obj : parentObj;
   for (var i = 0; i < len; i++) {
-    if (childs[i].getAttribute("data-target") == "parent") {
-      compileElement(parentObj, childs[i]);
+    if (childs[i].getAttribute("data-target") == "parent" && nextParent.$parent) {
+      compileElement(nextParent.$parent, childs[i]);
+    } else {
+      compileElement(nextParent, childs[i]);
     }
-    compileElement(nextParent, childs[i]);
   }
   if (klass && obj && typeof obj.init === 'function') {
     obj.init(); // trigger init event
