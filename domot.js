@@ -7,16 +7,15 @@ function DomoT(elem) {
 DomoT.prototype.repaint = function(data) {
 	var elem = this.elem;
 
-	// Remove all children https://stackoverflow.com/a/3955238/1305074
-	while (elem.firstChild) {
-		elem.removeChild(elem.firstChild);
-	}
-
 	var rendered = eval("(function(_){with(_){ var $_ = {}; return " + this.tmpl + "; }})(data)");
+
+	elem.innerHTML = "";
 	if (Array.isArray(rendered)) {
 		rendered.forEach(function(e) {
 			elem.appendChild(e);
 		});
+	} else if (typeof rendered == "string") {
+		elem.textContent = rendered;
 	} else {
 		elem.appendChild(rendered);
 	}
@@ -26,6 +25,7 @@ DomoT.prototype.repaint = function(data) {
 };
 
 DomoT.prototype.init = function() {
+	this.elem.innerHTML = "";
 	if (this.initdata) {
 		this.repaint(JSON.parse(this.initdata));
 	}
