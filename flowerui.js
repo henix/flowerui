@@ -2,50 +2,16 @@
  * FlowerUI: 一个简单的组件框架
  * 兼容性：IE8
  *
- * https://github.com/henix/flowerui
+ * dependency:
  *
- * License: MIT
+ * - String.prototype.startsWith
+ * - String.prototype.endsWith
+ * - Array.from
+ *
+ * https://github.com/henix/flowerui
  */
 var FlowerUI;
 (function(FlowerUI) {
-
-var startsWith;
-if (String.prototype.startsWith) {
-	startsWith = function(a, b) {
-		return a.startsWith(b);
-	};
-} else {
-	startsWith = function(a, b) {
-		return a.lastIndexOf(b, 0) === 0;
-	};
-}
-
-var endsWith;
-if (String.prototype.endsWith) {
-	endsWith = function(a, b) {
-		return a.endsWith(b);
-	};
-} else {
-	endsWith = function(a, b) {
-		return a.indexOf(b, a.length - b.length) !== -1;
-	};
-}
-
-function removeEnd(str, suffix) {
-	if (endsWith(str, suffix)) {
-		return str.substring(0, str.length - suffix.length);
-	} else {
-		return str;
-	}
-}
-
-function makeArray(x) {
-	var ar = [];
-	for (var i = 0; i < x.length; i++) {
-		ar.push(x[i]);
-	}
-	return ar;
-}
 
 /**
  * new klass(arg0)
@@ -72,11 +38,11 @@ function newInstance(klass, arg0) {
  * class 必须是 -package-Name 的形式
  */
 function compileElement(parentObj, element) {
-	var name = element.getAttribute('name');
+	var name = element.getAttribute("name");
 	var klass;
 	var tmp = /\S+/.exec(element.className);
 	if (tmp) tmp = tmp[0];
-	if (tmp && startsWith(tmp, "-")) {
+	if (tmp && tmp.startsWith("-")) {
 		klass = tmp.substring(1).replace("-", ".");
 	}
 	var obj = null;
@@ -89,8 +55,8 @@ function compileElement(parentObj, element) {
 	}
 	if (name && parentObj) {
 		obj = obj || element;
-		if (endsWith(name, '[]')) { // array
-			name = removeEnd(name, '[]');
+		if (name.endsWith("[]")) { // array
+			name = name.substring(0, name.length - 2);
 			if (!parentObj[name]) {
 				parentObj[name] = [];
 			}
@@ -109,7 +75,7 @@ function compileElement(parentObj, element) {
 			compileElement(nextParent, childs[i]);
 		}
 	}
-	if (klass && obj && typeof obj.init === 'function') {
+	if (klass && obj && typeof obj.init === "function") {
 		obj.init(); // trigger init event
 	}
 	return obj;
@@ -125,7 +91,7 @@ function compileAll(element) {
  * Call this if you changed your innerHTML, and want to your obj keep updated.
  */
 function refresh(obj, elem) {
-	var childs = makeArray(elem.children);
+	var childs = Array.from(elem.children);
 	var len = childs.length;
 	for (var i = 0; i < len; i++) {
 		compileElement(obj, childs[i]);
@@ -135,7 +101,5 @@ function refresh(obj, elem) {
 FlowerUI.compileElement = compileElement;
 FlowerUI.compileAll = compileAll;
 FlowerUI.refresh = refresh;
-
-FlowerUI.makeArray = makeArray;
 
 })(FlowerUI || (FlowerUI = {}));
