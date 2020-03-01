@@ -21,6 +21,10 @@ function newInstance(klass, arg0) {
 	var f = window;
 	for (var i = 0; i < names.length; i++) {
 		f = f[names[i]];
+		if (!f) {
+			// 忽略类不存在的错误
+			return null;
+		}
 	}
 	return new f(arg0);
 }
@@ -49,7 +53,7 @@ function compileElement(parentObj, element) {
 	if (klass) {
 		obj = newInstance(klass, element);
 		// $parent 让子节点可以访问父节点
-		if (parentObj) {
+		if (obj && parentObj) {
 			obj.$parent = parentObj;
 		}
 	}
@@ -67,7 +71,7 @@ function compileElement(parentObj, element) {
 	}
 	var childs = element.children;
 	var len = childs.length;
-	var nextParent = klass ? obj : parentObj;
+	var nextParent = (klass && obj) ? obj : parentObj;
 	for (var i = 0; i < len; i++) {
 		if (childs[i].getAttribute("data-target") == "parent" && nextParent.$parent) {
 			compileElement(nextParent.$parent, childs[i]);
